@@ -1,0 +1,5 @@
+db:
+  url: http://host.docker.internal:8086/
+  token: w8ntgwt9PLBFrOr-b4CUNLyLpDaqeB5IijuEhMcAxTaTUktt3nVC3-jufoQnAWFN6upcVp8N03ja-iHQclV5Fw==
+  org: Adeo
+  bucket: server-crashes
