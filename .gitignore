@@ -157,8 +157,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-./frontend/node_modules
-./backend/ml-model/data/01_raw/incidents.csv
+frontend/node_modules/
+backend/ml-model/data/
 
 .vscode
 .pytest_cache
