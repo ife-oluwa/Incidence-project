@@ -29,7 +29,7 @@ class DB:
         response = requests.get(self.URL + '/ping')
         if not is_empty(self.CSV_LOCATION) and response.status_code == 200:
             df = pd.read_csv(
-                './incidents.csv').set_index('date_exploitation')
+                './incidents.csv').set_index('date').iloc[::-1]
 
             with influxdb_client.InfluxDBClient(url=self.URL, token=self.TOKEN, org=self.ORG) as client:
                 point_settings = PointSettings(**{'type': 'incidents'})

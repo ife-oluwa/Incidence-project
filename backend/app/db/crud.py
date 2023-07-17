@@ -9,9 +9,9 @@ import influxdb_client
 from decouple import config
 import time
 
-URL = config('URL')
-TOKEN = config('TOKEN')
-ORG = config('ORG')
+URL = config("URL")
+TOKEN = config("TOKEN")
+ORG = config("ORG")
 BUCKET1 = config("BUCKET1")
 BUCKET2 = config("BUCKET2")
 BUCKET3 = config("BUCKET3")
@@ -163,5 +163,4 @@ def get_model_metrics() -> t.List[schemas.Metrics]:
             'y': round(record['error'], 1),
         } for table in records for record in table.records
         ]
-    print(records)
     return results

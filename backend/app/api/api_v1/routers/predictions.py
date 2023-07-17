@@ -54,7 +54,12 @@ async def metrics_list(
     """
     errors = get_model_metrics()
     response.headers["Content-Range"] = f"0-9/{len(errors)}"
-    return errors
+    return [
+        {
+            'id': 'Metrics',
+            'data': errors
+        }
+    ]
 
 
 @r.get("/monday", response_model=t.List[Prediction], response_model_exclude_none=True)

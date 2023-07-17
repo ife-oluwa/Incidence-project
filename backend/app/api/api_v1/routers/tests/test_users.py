@@ -1,7 +1,7 @@
 from app.db import models
 
 
-def test_get_users(client, test_superuser, superuser_token_headers):
+def test_users_list(client, test_superuser, superuser_token_headers):
     response = client.get("/api/v1/users", headers=superuser_token_headers)
     assert response.status_code == 200
     assert response.json() == [
@@ -13,6 +13,7 @@ def test_get_users(client, test_superuser, superuser_token_headers):
             "is_superuser": test_superuser.is_superuser
         }
     ]
+
 
 
 def test_delete_user(client, test_superuser, test_db, superuser_token_headers):
@@ -65,7 +66,7 @@ def test_edit_user_not_found(client, test_db, superuser_token_headers):
     assert response.status_code == 404
 
 
-def test_get_user(
+def test_user_details(
     client,
     test_user,
     superuser_token_headers

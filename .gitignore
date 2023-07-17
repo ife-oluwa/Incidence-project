@@ -160,3 +160,5 @@ venv.bak/
 ./frontend/node_modules
 ./backend/ml-model/data/01_raw/incidents.csv
 
+.vscode
+.pytest_cache

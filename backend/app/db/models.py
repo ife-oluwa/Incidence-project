@@ -14,13 +14,3 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
     is_superuser = Column(Boolean, default=False)
-    predictions = relationship('Prediction', back_populates='user')
-
-
-class Prediction(Base):
-    __tablename__ = 'prediction'
-    id = Column(Integer, primary_key=True, index=True)
-    date_created = Column(Date, server_default=func.now())
-    predictions = Column(Integer, nullable=False)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship('User', back_populates='predictions')

@@ -79,15 +79,20 @@ class Prediction(BaseModel):
 
 
 class Metrics(BaseModel):
-    x: t.Optional[datetime.date]
-    y: float
+    id: str
+    data: t.List[dict]
 
     class Config:
         orm_mode = True
         schema_extra = {
             "example": {
-                "x": "2023-06-02",
-                "y": 18.4
+                "id": "Metrics",
+                "data": [
+                    {
+                        "x": "2023-06-02",
+                        "y": 18.4
+                    }
+                ]
             }
         }
 

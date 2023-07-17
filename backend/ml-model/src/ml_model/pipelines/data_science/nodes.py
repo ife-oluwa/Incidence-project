@@ -105,7 +105,7 @@ def model_predict(model, data: pd.DataFrame):
         start=start, end=end, dynamic=True)
 
     # Append predictions bucket in influxdb
-    next_week_pred = future_df[['forecast']].tail(3)
+    next_week_pred = future_df[['forecast']].tail(7)
     print(next_week_pred)
     with influxdb_client.InfluxDBClient(url=URL, token=TOKEN, org=ORG) as client:
         point_settings = PointSettings(**{'type': 'predictions'})
