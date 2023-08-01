@@ -7,6 +7,8 @@ import os
 from datetime import datetime
 import requests
 import sys
+from google.oauth2 import service_account
+
 
 action = sys.argv[1]
 
@@ -24,12 +26,39 @@ class DB:
         self.URL = os.getenv('URL')
         self.CSV_LOCATION = os.getenv('CSV_LOCATION')
 
-    def upload_data(self):
+    def seed_db(self, credentials, project) -> pd.DataFrame:
+        from google.cloud import bigquery
 
+        with open('./seed.sql', 'r') as f:
+            query = f.read()
+
+        client = bigquery.Client(
+            credentials=credentials,
+            project=project
+        )
+        job = client.query(query).to_dataframe()
+
+        return job
+
+    def upload_data(self, data) -> None:
+        """
+        Uploads data from a CSV file to an InfluxDB server using the InfluxDB Python client.
+
+        Returns:
+            None
+
+        Raises:
+            Exception: If there is an issue with the CSV 
+            file or an unexpected response from the server.
+        """
         response = requests.get(self.URL + '/ping')
-        if not is_empty(self.CSV_LOCATION) and response.status_code == 200:
-            df = pd.read_csv(
-                './incidents.csv').set_index('date').iloc[::-1]
+        if response.status_code == 200:
+            if isinstance(data, pd.DataFrame):
+                df = data.copy()
+            if isinstance(data, str):
+                if not is_empty(data) and response.status_code == 200:
+                    df = pd.read_csv(
+                        './incidents.csv').set_index('date').iloc[::-1]
 
             with influxdb_client.InfluxDBClient(url=self.URL, token=self.TOKEN, org=self.ORG) as client:
                 point_settings = PointSettings(**{'type': 'incidents'})
@@ -45,7 +74,12 @@ class DB:
             raise Exception("Unknown error: %s" % response.status_code)
 
     def download_data(self) -> pd.DataFrame:
+        """
+        Downloads data from an InfluxDB server to a pandas Dataframe using the InfluxDB Python client.
 
+        Returns:
+            pd.DataFrame
+        """
         response = requests.get(self.URL + '/ping')
         if response.status_code == 200:
             with influxdb_client.InfluxDBClient(url=self.URL, token=self.TOKEN, org=self.ORG) as client:
@@ -65,8 +99,17 @@ class DB:
 if __name__ == '__main__':
     data_handle = DB()
     if action == 'upload':
-        data_handle.upload_data()
+        file_path = os.getenv('CSV_LOCATION')
+        data_handle.upload_data(file_path)
     elif action == 'download':
         data_handle.download_data()
+    elif action == 'seed':
+        CREDENTIAL_KEY_PATH = os.getenv('CREDENTIAL_KEY_PATH')
+        GCP_PROJECT = os.getenv('GCP_PROJECT')
+        CREDENTIAL_KEY = service_account.Credentials.from_service_account_file(
+            CREDENTIAL_KEY_PATH
+        )
+        job = data_handle.seed_data(credentials=CREDENTIAL_KEY, project=GCP_PROJECT)
+        data_handle.upload_data(job)
     else:
         raise Exception('Unknown action')

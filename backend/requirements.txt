@@ -36,3 +36,5 @@ pytest~=7.2
 
 python-dotenv
 python-decouple
+google-cloud-bigquery
+google-auth
