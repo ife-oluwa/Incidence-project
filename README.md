@@ -21,4 +21,4 @@ Once the database is seeded, the model can be trained by using this script:
 `./scripts/model_training.sh`
 
 ## Homepage
-![Homepage](./Homepage.png, "Homepage")
+![Homepage](Homepage.png, "Homepage")
