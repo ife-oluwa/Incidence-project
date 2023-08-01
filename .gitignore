@@ -159,7 +159,8 @@ venv.bak/
 .mypy_cache/
 frontend/node_modules/
 backend/ml-model/data/
-backend/data/seed.sql
+backend/data_utils/seed.sql
+backend/data_utils/test.py
 
 .vscode
 .pytest_cache
