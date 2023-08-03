@@ -9,10 +9,10 @@ docker-compose up -d
 # Wait for postgres
 sleep 5;
 
-#docker-compose run --rm backend alembic init migrations
+docker-compose run --rm backend alembic init migrations
 
 
-#docker-compose run --rm backend alembic revision  -m "create initial tables"
+docker-compose run --rm backend alembic revision  -m "create initial tables"
 # Run migrations
 docker-compose run --rm backend alembic upgrade head
 
