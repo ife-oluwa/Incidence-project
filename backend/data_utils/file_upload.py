@@ -40,10 +40,12 @@ class DB:
 
         return job
 
-    def upload_data(self, data) -> None:
+    def upload_data(self, data: str | pd.DataFrame) -> None:
         """
         Uploads data from a CSV file to an InfluxDB server using the InfluxDB Python client.
 
+        Args:
+            data: The data to upload.
         Returns:
             None
 
