@@ -7,7 +7,7 @@ import os
 from datetime import datetime
 import requests
 import sys
-from google.oauth2 import service_account
+# from google.oauth2 import service_account
 
 
 action = sys.argv[1]
@@ -40,7 +40,7 @@ class DB:
 
         return job
 
-    def upload_data(self, data: str | pd.DataFrame) -> None:
+    def upload_data(self, data) -> None:
         """
         Uploads data from a CSV file to an InfluxDB server using the InfluxDB Python client.
 

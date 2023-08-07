@@ -161,6 +161,7 @@ frontend/node_modules/
 backend/ml-model/data/
 backend/data_utils/seed.sql
 backend/data_utils/test.py
+backend/ml-model/notebooks/
 
 .vscode
 .pytest_cache

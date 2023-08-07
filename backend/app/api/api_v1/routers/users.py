@@ -58,10 +58,10 @@ async def user_details(
     """Get any user details
 
     Args:
-        request (Request): _description_
-        user_id (int): _description_
-        db (_type_, optional): _description_. Defaults to Depends(get_db).
-        current_user (_type_, optional): _description_. Defaults to Depends(get_current_active_superuser).
+        Response (Request)
+        user_id (int)
+        db (_type_, optional). Defaults to Depends(get_db).
+        current_user (_type_, optional). Defaults to Depends(get_current_active_superuser).
     """
     user = get_user(db, user_id)
     response.headers["Content-Range"] = "0-9/1"
